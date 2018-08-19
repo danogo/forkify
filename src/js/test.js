@@ -1,3 +1,3 @@
 console.log('Hello from test module');
 
-export default 'some exported value from test.js';
+export default 'Hola from test.js';
