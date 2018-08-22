@@ -1,6 +1,6 @@
+// search MODEL
 import axios from 'axios';
 
-// MODEL
 export default class Search {
   constructor(query) {
     this.query = query;
