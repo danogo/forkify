@@ -7,6 +7,20 @@ export const clearInput = () => {
   elements.searchInput.value = '';
 };
 
+// shorten title to fit in one line = to have max 17 characters
+const limitRecipeTitle = (title, limit = 17) => {
+  if (title.length > limit) {
+    title = title.split(' ').reduce((acc, el) => {
+      if (`${acc} ${el}`.length <= limit) {
+        return acc += ' ' + el;
+      }
+      return acc;
+    });
+    return `${title}...`;
+  }
+  return title;
+}
+
 export const renderRecipe = recipe => {
   const markup = `
     <li>
@@ -15,7 +29,7 @@ export const renderRecipe = recipe => {
                 <img src="${recipe.image_url}" alt="${recipe.title}">
             </figure>
             <div class="results__data">
-                <h4 class="results__name">${recipe.title}</h4>
+                <h4 class="results__name">${limitRecipeTitle(recipe.title)}</h4>
                 <p class="results__author">${recipe.publisher}</p>
             </div>
         </a>
