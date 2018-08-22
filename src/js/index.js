@@ -13,7 +13,7 @@ const state = {};
 // handler for searching for a recipe, has to be async because we awaiting for the results and then displaying it
 const controlSearch = async () => {
   // 1) Get query from View
-  const query = 'pasta' //TODO placeholder for now 
+  const query = 'soup' //TODO placeholder for now 
 
   if (query) {
     // 2) Create new search object with a given query and save in state
