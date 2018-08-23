@@ -1,6 +1,6 @@
 // APP CONTROLLER
 import Search from './models/Search';
-import { elements } from './view/base';
+import { elements, renderLoader, removeLoader } from './view/base';
 import * as searchView from './view/searchView';
 
 /** Global state of the app
@@ -21,13 +21,15 @@ const controlSearch = async () => {
     // 2) Create new search object with a given query and save in state
     state.search = new Search(query);
     
-    // 3) Clear and prepare UI for new results
+    // 3) Clear and prepare UI for new results, display loader spinner in results container while waiting for results
     searchView.clearInput();
     searchView.clearResults();
+    renderLoader(elements.searchResCont);
 
     // 4) Search for new recipes
     // getResults method is async and returns a promise so we have to await until it is resolved to display the results from it
     await state.search.getResults();
+    removeLoader();
 
     // 5) Render recipes on UI
     searchView.renderResults(state.search.recipes);
