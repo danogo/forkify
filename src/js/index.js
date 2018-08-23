@@ -36,8 +36,22 @@ const controlSearch = async () => {
   }
 }
 
+// Event listener for searching
 elements.searchForm.addEventListener('submit', e => {
   // prevent reloading page after submitting the form
   e.preventDefault();
   controlSearch();
+});
+
+// Event listener for clicking pagination buttons
+elements.searchResPag.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-inline');
+  if (btn) {
+    // grab custom data-goto attribute value
+    const goToPage = parseInt(btn.dataset.goto, 10);
+    // clear results from previous page
+    searchView.clearResults();
+    // render results for page which clicked btn leads to
+    searchView.renderResults(state.search.recipes, goToPage)
+  }
 });

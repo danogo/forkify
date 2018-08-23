@@ -3,7 +3,8 @@ export const elements = {
   searchForm: document.querySelector('.search'),
   searchInput: document.querySelector('.search__field'),
   searchResList: document.querySelector('.results__list'),
-  searchResCont: document.querySelector('.results')
+  searchResCont: document.querySelector('.results'),
+  searchResPag: document.querySelector('.results__pages')
 };
 
 export const elSelectors = {
@@ -22,5 +23,8 @@ export const renderLoader = parent => {
 };
 
 export const removeLoader = () => {
-  document.querySelector(`.${elSelectors.loader}`).remove();
+  const loader = document.querySelector(`.${elSelectors.loader}`)
+  if (loader) {
+    loader.remove();
+  } 
 }
