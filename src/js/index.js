@@ -6,6 +6,7 @@ import {
   removeLoader
 } from './view/base';
 import * as searchView from './view/searchView';
+import * as recipeView from './view/recipeView';
 
 /** Global state of the app
  * - Search object
@@ -80,7 +81,8 @@ const controlRecipe = async () => {
   console.log(id);
   if (id) {
     // 2) Prepare UI for changes
-
+    recipeView.clearRecipe();
+    renderLoader(elements.recipe);
     // 3) Create new recipe object
     state.recipe = new Recipe(id);
 
@@ -94,7 +96,8 @@ const controlRecipe = async () => {
       state.recipe.calcServings();
       
       // 6) Render recipe in the UI
-      console.log(state.recipe);
+      removeLoader();
+      recipeView.renderRecipe(state.recipe);
     } catch (error) {
       // Handling an error if getRecipe end up being resolved as rejected
       alert('Error processing recipe!');

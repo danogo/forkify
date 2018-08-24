@@ -28,7 +28,7 @@ export default class Recipe {
 
   calcPrepTime() {
     // Assuming that we need 5 min for each ingredient
-    const numIng = this.ingredients.length
+    const numIng = this.ingredients.length;
     this.time = numIng * 5;
   }
 
@@ -40,6 +40,7 @@ export default class Recipe {
   parseIngredients() {
     const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
     const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+    const units = [...unitsShort, 'kg', 'g'];
     const newIngredients = this.ingredients.map(el => {
       // 1) Uniform units
       let ingredient = el.toLowerCase();
@@ -54,7 +55,7 @@ export default class Recipe {
       // Split string into array of words
       const arrIng = ingredient.split(' ');
       // check if that array contains any string from unitsShort and if does find index of it
-      const unitIndex = arrIng.findIndex(el => unitsShort.includes(el));
+      const unitIndex = arrIng.findIndex(el => units.includes(el));
 
       let objIng;
       if (unitIndex > -1) {
