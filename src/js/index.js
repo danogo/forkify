@@ -1,5 +1,5 @@
-// APP CONTROLLER
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import { elements, renderLoader, removeLoader } from './view/base';
 import * as searchView from './view/searchView';
 
@@ -11,7 +11,10 @@ import * as searchView from './view/searchView';
  */
 const state = {};
 
-
+// APP CONTROLLERS
+/**
+ * SEARCH CONTROLLER
+*/
 // handler for searching for a recipe, has to be async because we awaiting for the results and then displaying it
 const controlSearch = async () => {
   // 1) Get query from View
@@ -54,4 +57,12 @@ elements.searchResPag.addEventListener('click', e => {
     // render results for page which clicked btn leads to
     searchView.renderResults(state.search.recipes, goToPage)
   }
+});
+
+/**
+ * RECIPE CONTROLLER
+*/
+const r = new Recipe(54454);
+r.getRecipe().then(res => {
+  console.log(res);
 });
