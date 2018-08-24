@@ -8,7 +8,7 @@ export default class Search {
   constructor(query) {
     this.query = query;
   }
-  // method to fetch recipes, it's async so it returns a promise
+  // Method to fetch recipes, it's async so it returns a promise
   async getResults() {
     try {
       const res = await axios.get(`${proxy}http://food2fork.com/api/search?key=${key}&q=${this.query}`);

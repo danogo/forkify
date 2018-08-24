@@ -30,7 +30,7 @@ export default class Recipe {
     this.time = numIng * 5;
   }
 
-  getServings() {
+  calcServings() {
     this.servings = 4;
   }
 }
