@@ -110,3 +110,21 @@ const controlRecipe = async () => {
 // In case user reloads the page we want him to see results too
 // window.addEventListener('load', controlRecipe);
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+// Handling recipe button clicks
+elements.recipe.addEventListener('click', event => {
+  // Choose action based on matching selector for clicked element
+  if (event.target.matches('.btn-decrease, .btn-decrease *')) {
+    // .btn * means all elements inside btn class
+    if (state.recipe.servings > 1) {
+      // update model
+      state.recipe.updateServings('dec');
+      // update UI
+      recipeView.updateServings(state.recipe);
+    }
+  } else if (event.target.matches('.btn-increase, .btn-increase *')) {
+    state.recipe.updateServings('inc');
+    recipeView.updateServings(state.recipe);
+  }
+  console.log(state.recipe);
+})

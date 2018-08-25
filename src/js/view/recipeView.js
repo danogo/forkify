@@ -48,6 +48,7 @@ export const renderRecipe = recipe => {
                     <span>${recipe.title}</span>
                 </h1>
             </figure>
+
             <div class="recipe__details">
                 <div class="recipe__info">
                     <svg class="recipe__info-icon">
@@ -64,12 +65,12 @@ export const renderRecipe = recipe => {
                     <span class="recipe__info-text"> servings</span>
 
                     <div class="recipe__info-buttons">
-                        <button class="btn-tiny">
+                        <button class="btn-tiny btn-decrease">
                             <svg>
                                 <use href="img/icons.svg#icon-circle-with-minus"></use>
                             </svg>
                         </button>
-                        <button class="btn-tiny">
+                        <button class="btn-tiny btn-increase">
                             <svg>
                                 <use href="img/icons.svg#icon-circle-with-plus"></use>
                             </svg>
@@ -86,9 +87,7 @@ export const renderRecipe = recipe => {
             <div class="recipe__ingredients">
                 <ul class="recipe__ingredient-list">
                 ${recipe.ingredients.map(el => createIngredient(el)).join('')}
-                    
                 </ul>
-
                 <button class="btn-small recipe__btn">
                     <svg class="search__icon">
                         <use href="img/icons.svg#icon-shopping-cart"></use>
@@ -112,4 +111,16 @@ export const renderRecipe = recipe => {
             </div>
   `;
   elements.recipe.insertAdjacentHTML('afterbegin', markup);
-}
+};
+
+export const updateServings = recipe => {
+    // Update servings
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+    // Update ingredients
+    const ingCounts = document.querySelectorAll('.recipe__count');
+    ingCounts.forEach((el, i) => {
+        // Upgrade every ing in the UI with the new value of count
+        el.textContent = formatCount(recipe.ingredients[i].count);
+    });
+};
