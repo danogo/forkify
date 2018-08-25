@@ -5,7 +5,8 @@ export const elements = {
   searchResList: document.querySelector('.results__list'),
   searchResCont: document.querySelector('.results'),
   searchResPag: document.querySelector('.results__pages'),
-  recipe: document.querySelector('.recipe')
+  recipe: document.querySelector('.recipe'),
+  list: document.querySelector('.shopping__list')
 };
 
 export const elSelectors = {
