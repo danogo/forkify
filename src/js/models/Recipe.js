@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  proxy,
-  key
-} from '../config';
+import { proxy, key } from '../config';
 
 /**
  * RECIPE MODEL
