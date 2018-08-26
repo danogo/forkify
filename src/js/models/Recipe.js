@@ -35,9 +35,9 @@ export default class Recipe {
 
   // Formatting ingredients to look the same way
   parseIngredients() {
-    const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
-    const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
-    const units = [...unitsShort, 'kg', 'g'];
+    const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds', 'sticks', 'stick', 'heads', 'head'];
+    const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound', 'stick', 'stick', 'head', 'head'];
+    const units = [...unitsShort, 'kg', 'g', 'pinch'];
     const newIngredients = this.ingredients.map(el => {
       // 1) Uniform units
       let ingredient = el.toLowerCase();
@@ -63,7 +63,15 @@ export default class Recipe {
           // Eg. 4 cups 
           // In edge case like 4-1/2 wich suppose to mean 4.5
           // We make it 4+1/2 and evaluate using eval to 4.5
-          count = eval(arrCount[0].replace('-', '+'));
+          if (Number.isNaN(parseInt(arrCount[0]))) {
+            // eg. " teaspoon dried basil", unit without a number or "&frac12; tsp kosher salt"
+            count = 1;
+          } else {
+            let currentCount = arrCount[0];
+            // "&frac12; tsp kosher salt" : "4-1/2 tsp"
+            currentCount = currentCount.includes('&') ? parseInt(currentCount, 10).toString() : currentCount
+            count = eval(currentCount.replace('-', '+'));
+          }
         } else {
           // Eg. 4 1/2 cups
           count = eval(arrCount.join('+'));
