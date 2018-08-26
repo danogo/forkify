@@ -66,7 +66,7 @@ const renderButtons = (page, numOfRes, resPerPage) => {
   // amount of pages for pagination
   const pages = Math.ceil(numOfRes / resPerPage);
   // Don't show buttons for pagination if there is one page or there are no results found
-  if (pages === 1) return;
+  if (pages === 1 || pages === 0) return;
   
   let button;
   if (page === 1 && pages > 1) {
