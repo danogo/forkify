@@ -14,11 +14,11 @@ export const clearResults = () => {
 
 export const highlightSelected = id => {
   document.querySelectorAll('.results__link').forEach(el => el.classList.remove('results__link--active'));
-  document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+  document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
 };
 
 // shorten title to fit in one line = to have max 17 characters
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
   if (title.length > limit) {
     title = title.split(' ').reduce((acc, el) => {
       if (`${acc} ${el}`.length <= limit) {

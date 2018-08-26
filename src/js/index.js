@@ -10,6 +10,7 @@ import {
 import * as searchView from './view/searchView';
 import * as recipeView from './view/recipeView';
 import * as listView from './view/listView';
+import * as likesView from './view/likesView';
 
 /** Global state of the app
  * - Search object
@@ -99,9 +100,13 @@ const controlRecipe = async () => {
       
       // 6) Render recipe in the UI
       removeLoader();
-      recipeView.renderRecipe(state.recipe);
+      recipeView.renderRecipe(
+        state.recipe,
+        state.likes.isLiked(id)
+      );
     } catch (error) {
       // Handling an error if getRecipe end up being resolved as rejected
+      console.log(error);
       alert('Error processing recipe!');
     }
   }
@@ -146,6 +151,9 @@ elements.list.addEventListener('click', event => {
   }
 });
 
+// Testing
+state.likes = new Likes();
+likesView.toggleLikesMenuBtn(state.likes.getNumLikes());
 /**
  * LIKES CONTROLLER
  */
@@ -153,28 +161,30 @@ const controlLikes = () => {
   if (!state.likes) state.likes = new Likes();
   const currentID = state.recipe.id;
 
-  // User has NOT liked current recipe yet
+  // User has NOT liked current recipe yet, now wants to like
   if (!state.likes.isLiked(currentID)) {
     // Add like to the state
-    state.likes.addLike(
+    const newLike = state.likes.addLike(
       state.recipe.id,
       state.recipe.title,
       state.recipe.author,
       state.recipe.img
     )
     // Toggle the like button to full img
-
+    likesView.toggleLikeBtn(true);
     // Add like to the likes UI list
-    console.log(state.likes);
-    // User HAS liked current recipe already
+    likesView.renderLike(newLike);
+    // User HAS liked current recipe already, now wants to dislike
   } else {
     // Remove like from the state
     state.likes.deleteLike(currentID);
     // Toggle the like button to empty img
-    
+    likesView.toggleLikeBtn(false);
     // Remove like from the likes UI list
-    console.log(state.likes);
+    likesView.deleteLike(currentID);
   }
+  // If there are no likes, hide btn for likes menu
+  likesView.toggleLikesMenuBtn(state.likes.getNumLikes());
 }
 
 // Handling clicking on various buttons inside recipe UI
