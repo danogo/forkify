@@ -13,8 +13,12 @@ export const clearResults = () => {
 };
 
 export const highlightSelected = id => {
-  document.querySelectorAll('.results__link').forEach(el => el.classList.remove('results__link--active'));
-  document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
+  const allResults = document.querySelectorAll('.results__link');
+  const currentResult = document.querySelector(`.results__link[href="#${id}"]`);
+  if (allResults && currentResult) {
+    allResults.forEach(el => el.classList.remove('results__link--active'));
+    currentResult.classList.add('results__link--active');
+  }
 };
 
 // shorten title to fit in one line = to have max 17 characters

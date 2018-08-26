@@ -19,7 +19,6 @@ import * as likesView from './view/likesView';
  * - Liked recipes object
  */
 const state = {};
-
 // APP CONTROLLERS
 /**
  * SEARCH CONTROLLER
@@ -151,9 +150,6 @@ elements.list.addEventListener('click', event => {
   }
 });
 
-// Testing
-state.likes = new Likes();
-likesView.toggleLikesMenuBtn(state.likes.getNumLikes());
 /**
  * LIKES CONTROLLER
  */
@@ -186,6 +182,17 @@ const controlLikes = () => {
   // If there are no likes, hide btn for likes menu
   likesView.toggleLikesMenuBtn(state.likes.getNumLikes());
 }
+
+// Retrieve likes data from localStorage on page load
+window.addEventListener('load', () => {
+  state.likes = new Likes();
+  // read likes from LS
+  state.likes.readStorage();
+  // toggle button according to likes existence
+  likesView.toggleLikesMenuBtn(state.likes.getNumLikes());
+  // render initial likes
+  state.likes.likes.forEach(lk => likesView.renderLike(lk));
+});
 
 // Handling clicking on various buttons inside recipe UI
 elements.recipe.addEventListener('click', event => {
