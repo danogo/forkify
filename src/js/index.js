@@ -8,6 +8,7 @@ import {
 } from './view/base';
 import * as searchView from './view/searchView';
 import * as recipeView from './view/recipeView';
+import * as listView from './view/listView';
 
 /** Global state of the app
  * - Search object
@@ -79,7 +80,6 @@ elements.searchResPag.addEventListener('click', e => {
 const controlRecipe = async () => {
   // 1) Get id from url
   const id = window.location.hash.replace('#', '');
-  console.log(id);
   if (id) {
     // 2) Prepare UI for changes
     recipeView.clearRecipe();
@@ -105,14 +105,48 @@ const controlRecipe = async () => {
     }
   }
 };
-
 // Hashchange event is available on window object whenever hash changes
 // window.addEventListener('hashchange', controlRecipe);
 // In case user reloads the page we want him to see results too
 // window.addEventListener('load', controlRecipe);
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-// Handling recipe button clicks
+/**
+ * LIST CONTROLLER
+ */
+
+ const controlList = () => {
+   // Create a new list if there is none yet
+  if (!state.list) state.list = new List();
+
+  // Clear old list from model and view if exist
+  state.list.clearList();
+  listView.clearList();
+
+  // Add each ingredient to the list and UI
+  state.recipe.ingredients.forEach(ing => {
+    const item = state.list.addItem(ing.count, ing.unit, ing.ingredient);
+    listView.renderItem(item);
+  });
+ };
+
+// Handling deleting or updating shopping list item
+elements.list.addEventListener('click', event => {
+  // grab id from the first ancestor with that id
+  const id = event.target.closest('.shopping__item').dataset.itemid;
+  if (event.target.matches('.shopping__delete, .shopping__delete *')) {
+    // delete item from the model
+    state.list.deleteItem(id);
+    // delete item from the UI
+    listView.deleteItem(id);
+  } else if (event.target.matches('.shopping__count-value')) {
+    // update model with the new value
+    const val = parseFloat(event.target.value, 10);
+    state.list.updateCount(id, val);
+  }
+});
+
+// Handling clicking on various buttons inside recipe UI
 elements.recipe.addEventListener('click', event => {
   // Choose action based on matching selector for clicked element
   if (event.target.matches('.btn-decrease, .btn-decrease *')) {
@@ -126,6 +160,9 @@ elements.recipe.addEventListener('click', event => {
   } else if (event.target.matches('.btn-increase, .btn-increase *')) {
     state.recipe.updateServings('inc');
     recipeView.updateServings(state.recipe);
+  } else if (event.target.matches('.recipe__btn--list, .recipe__btn--list *')) {
+    controlList();
   }
-  console.log(state.recipe);
 })
+
+
