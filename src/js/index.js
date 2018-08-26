@@ -47,7 +47,7 @@ const controlSearch = async () => {
       searchView.renderResults(state.search.recipes);
     } catch (error) {
       // Handling an error if getResults end up being resolved as rejected
-      alert('Something went wronf with processing the search.');
+      alert('Something went wrong with processing the search.');
       removeLoader();
     }
 

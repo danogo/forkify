@@ -68,8 +68,8 @@ export default class Recipe {
             count = 1;
           } else {
             let currentCount = arrCount[0];
-            // "&frac12; tsp kosher salt" : "4-1/2 tsp"
-            currentCount = currentCount.includes('&') ? parseInt(currentCount, 10).toString() : currentCount
+            // "21&frac12; tsp" : "4-1/2 tsp"
+            currentCount = currentCount.includes('&') ? parseInt(currentCount, 10).toString() : currentCount;
             count = eval(currentCount.replace('-', '+'));
           }
         } else {
